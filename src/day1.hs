@@ -26,16 +26,12 @@ extrafuel f
 
 -- reading the input and printing the results
 
-readInt :: String -> Int
-readInt = read
-
-
 
 day1a :: IO()
 day1a = do  -- Prints results for both part 1 and part2
   input1 <- readFile "input/day1.txt"
   let inputs = lines input1
-  let masses = map readInt inputs
+  let masses = map read inputs 
   let fuels = map fuel masses
   let sumFuels = sum fuels
   let extrafuels = map extrafuel fuels
