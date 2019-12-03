@@ -15,7 +15,12 @@ module Day3
    readDirection,
    readDistance,
    readSegment,
-   day3a
+   seglength,
+   totalsteps,
+   steps,
+   wholeWireOrdered,
+   day3a,
+   day3b
    
   )
   where
@@ -56,10 +61,10 @@ makeWire' point (d,dist)
   |d == D = addAll Minus Y dist point
 
 addAll :: Sign-> Coord -> Distance -> Coordinate -> Wire
-addAll Plus X dist (x0,y0) = reverse [ (x,y0)|x<-[x0..(x0 + dist)]]
-addAll Minus X dist (x0,y0) = [ (x,y0)|x<-[(x0 - dist)..x0]]
-addAll Plus Y dist (x0,y0) = reverse [ (x0,y)|y<-[y0..(y0+dist)]]
-addAll Minus Y dist (x0,y0) = [(x0,y)|y<-[(y0 - dist)..y0]]
+addAll Plus X dist (x0,y0) = init $ reverse [ (x,y0)|x<-[x0..(x0 + dist)]]
+addAll Minus X dist (x0,y0) = init $ [ (x,y0)|x<-[(x0 - dist)..x0]]
+addAll Plus Y dist (x0,y0) = init $ reverse [ (x0,y)|y<-[y0..(y0+dist)]]
+addAll Minus Y dist (x0,y0) = init $ [(x0,y)|y<-[(y0 - dist)..y0]]
 
 wholeWire :: [Segment] -> Wire
 wholeWire seglist = join $ scanl extendWire [(0,0)] seglist 
@@ -91,3 +96,21 @@ readDistance = read
 readSegment :: (String,String) -> Segment
 readSegment (a,b)= (readDirection a, readDistance b)
 
+-- Part2
+
+wholeWireOrdered seglist = join $ map reverse $ scanl extendWire [(0,0)] seglist
+
+seglength wire point =  length $ takeWhile ( /= point) wire
+
+steps wire intersections = map (seglength wire ) intersections
+
+totalsteps wire1 wire2 intersections = zipWith (+) (steps wire1 intersections) (steps wire2 intersections)
+
+
+day3b = do
+  input3 <- readFile "./input/day3.txt"
+  let wires = map (map readSegment) $ map (map (splitAt 1)) $ map (splitOn ",") $ splitOn "\n" $ rstrip input3
+  let wire1 = wholeWireOrdered $ wires!!0
+  let wire2 = wholeWireOrdered $ wires!!1
+  let result = minimum $ totalsteps wire1 wire2 (intersections wire1 wire2)
+  print result

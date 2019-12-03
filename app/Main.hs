@@ -4,4 +4,4 @@ import Lib
 import Day3
 
 main :: IO ()
-main = day3a
+main = day3b
