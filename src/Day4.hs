@@ -1,8 +1,13 @@
 module Day4
   (day4a,
-   digs
+   day4b,
+   digs,
+   allIncrease,
+   hasDouble
   )
   where
+
+import Data.List
 
 digs 0 = []
 digs x = digs (x `div` 10) ++ [x `mod` 10]
@@ -41,4 +46,29 @@ day4a= do
   print between
   
   
-        
+--Part 2
+
+--new approach with making the whole list of options
+
+allNums :: [Int]
+allNums = [356261..846303]
+
+allIncrease :: [Int]->Bool
+allIncrease (x:[]) = True
+allIncrease (x:xs)= all (>= x) xs && allIncrease xs
+
+hasDouble :: [Int]->Bool
+hasDouble list = (filter (\x->length x ==2) $ group list) /=[]
+
+hasMultiple :: [Int]->Bool
+hasMultiple list = (filter (\x->length x >=2) $ group list) /=[]
+
+day4b :: IO()
+day4b = do
+  let numlists = map digs allNums
+  let codesPart1 = filter allIncrease $ filter hasMultiple numlists
+  let codes = filter allIncrease $ filter hasDouble numlists
+  let possibilitiesPart1 = length codesPart1
+  let possibilities = length codes
+  print possibilitiesPart1
+  print possibilities
