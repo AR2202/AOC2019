@@ -2,6 +2,7 @@ module Day9
   (Indexedlist,
    execute',
    day9a,
+   day9b,
    getInputPos,
    --example1,
    inputpos1,
@@ -150,7 +151,12 @@ day9a = do
   input9 <- puzzleInput9
   let outputs = execute' 0 input9 [] [1] 0
   print outputs
-  
+
+day9b = do
+  input9 <- puzzleInput9
+  let outputs = execute' 0 input9 [] [2] 0
+  print outputs
+    
 
 sequences = permutations [0..4]
 
