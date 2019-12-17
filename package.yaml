@@ -24,6 +24,7 @@ dependencies:
 - split
 - MissingH
 - containers
+- pipes
 
 library:
   source-dirs: src
