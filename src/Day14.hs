@@ -3,7 +3,6 @@ module Day14
    day14a,
    splitHead,
    subtosub,
-   parseDigit,
    splitEducts,
    reaction2ProductsEducts,
    reaction2Components,
@@ -12,7 +11,7 @@ module Day14
    makeEduct,
    makeProduct,
    makeEdge,
-    makeEdges
+   makeEdges
    
   )
   where
@@ -24,6 +23,7 @@ import Text.ParserCombinators.ReadP
 import Data.List.Split
 
 -- the functions to calculate the ammount needed
+
 isConnectedFrom vertex1 (e, a, b) = vertex1 == a
 
 isConnectedTo vertex1 (e,a,b) = vertex1 ==b
@@ -46,19 +46,6 @@ roundedUp a b
 
 -- parsing the Input
 
-digit :: ReadP Char
-digit = satisfy (\char -> char >= '0' && char <= '9')
-
-
-
-substance :: ReadP String
-substance =
-    many1 (satisfy (\char -> char >= 'A' && char <= 'Z'))
-
-substances :: ReadP String
-substances =
-    many1 (satisfy (\char -> (char >= 'A' && char <= 'Z')||(char == ' ')||(char == ',')||(char >= '0' && char <= '9')))
-
 splitHead :: String -> [String] -> ([String],[String])
 splitHead string list = (splitOn string (head list),tail list)
 
@@ -71,8 +58,6 @@ reaction2ProductsEducts = splitOn " => "
 reaction2Components = splitEducts . reaction2ProductsEducts
 
 reaction2tuples = subtosub . reaction2Components
-
-parseDigit = readP_to_S digit
 
 splitEduct t= splitOn " " $fst t
 
@@ -89,7 +74,7 @@ makeEdge tuple = (makeLabel tuple, makeProduct tuple, makeEduct tuple)
 
 makeEdges reaction = map makeEdge $ reaction2tuples reaction
 
-
+day14a :: IO ()
 day14a = do
   input <-readFile "./input/day14.txt"
   let inputlines = lines input
