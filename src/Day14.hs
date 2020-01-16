@@ -22,7 +22,10 @@ import Data.Ratio
 import Text.ParserCombinators.ReadP
 import Data.List.Split
 
+-- I use the head function a lot here, which is unsafe, but I'm assuming that the puzzle inputs are valid
+
 -- the functions to calculate the ammount needed
+
 
 isConnectedFrom vertex1 (e, a, b) = vertex1 == a
 
