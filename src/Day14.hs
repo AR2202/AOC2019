@@ -29,7 +29,7 @@ import Data.List.Split
 
 isConnectedFrom vertex1 (e, a, b) = vertex1 == a
 
-isConnectedTo vertex1 (e,a,b) = vertex1 ==b
+isConnectedTo vertex1 (e,a,b) = vertex1 == b
 
 connectedFrom vertex1 graph = filter (isConnectedFrom vertex1)$edgeList graph
 
@@ -67,7 +67,7 @@ splitEduct t= splitOn " " $fst t
 splitProduct t= splitOn " " $snd t
 
 makeLabel :: (String,String)->[(Int,Int)]
-makeLabel tuple = (read (head(splitEduct tuple)), read(head (splitProduct tuple))):[]
+makeLabel tuple = [(read.head)(splitEduct tuple), (read.head) (splitProduct tuple)]
 
 makeEduct tuple = head $ tail $ splitEduct tuple
 
@@ -81,7 +81,7 @@ day14a :: IO ()
 day14a = do
   input <-readFile "./input/day14.txt"
   let inputlines = lines input
-  let edges' = concat $ map makeEdges inputlines
+  let edges' = concatMap makeEdges inputlines
   let graph1 = edges edges'
   let result = totalAmmount' "ORE" graph1
   print result
