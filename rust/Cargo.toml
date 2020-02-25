@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 libmath = "0.2.1"
+array_tool="1.0.3"
