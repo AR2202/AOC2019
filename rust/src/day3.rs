@@ -136,7 +136,7 @@ pub mod day3a{
     }
     pub fn day3a_sol(){
         
-        let filename = "../../input/day3.txt";
+        let filename = "../input/day3.txt";
         let contents = fs::read_to_string(filename);
     
     
