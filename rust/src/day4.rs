@@ -62,6 +62,7 @@ pub mod day4ab{
         let slice = to_digits(num);
         monotonic_increasing(slice)
     }
+//note: this function will return true iff exactly 2 consecutive numbers are equal. The condition that the duplicate numbers be consecutive is fulfilled by all numbers whose digits are also monotonically increasing, therefore this condition is sufficient
 
     fn contains_doubles(slice:Vec<i32>)->bool{
         ((2..(slice.len()-1)).any(|i| &slice[i]==&slice[i - 1] && &slice[i]!=&slice[i-2] && &slice[i] != &slice[i+1])) 
@@ -73,7 +74,7 @@ pub mod day4ab{
         contains_doubles(slice)
     }
     
-    #[cfg(test)]
+#[cfg(test)]
 mod tests {
     use super::*;
     
@@ -109,6 +110,17 @@ mod tests {
         assert!(digitized_contains_multiples(11344));
         assert!(digitized_contains_multiples(12314));
         assert!(!digitized_contains_multiples(1234));
+        
+        
+    } 
+    #[test]
+    fn digitized_contains_doubles_test() {
+        
+        assert!(digitized_contains_doubles(12344));
+        assert!(digitized_contains_doubles(11344));
+        assert!(digitized_contains_doubles(11133444));
+        assert!(!digitized_contains_doubles(123334));
+        assert!(!digitized_contains_doubles(1234));
         
         
     } 
