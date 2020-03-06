@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 module Day8
   (day8a
   )
@@ -7,17 +8,17 @@ import Data.List.Split
 import Data.String.Utils (rstrip)
 
 
-layers list = chunksOf 150 list
+layers  = chunksOf 150 
 
-zeros list = map (length.(filter (==0))) $ layers list
+zeros  = map (length.(filter (==0))) . layers 
 
 minZeroPos list = length $ head$ splitWhen (==(minimum (zeros list))) $ zeros list
 
 minLayer list = head $ take 1 $ drop (minZeroPos list) $ layers list
 
-ones list = length.(filter (==1)) $ minLayer list
+ones  = length.(filter (==1)) . minLayer 
 
-twos list = length.(filter (==2)) $ minLayer list
+twos  = length.(filter (==2)) . minLayer 
 
 readInt :: String -> Int
 readInt = read

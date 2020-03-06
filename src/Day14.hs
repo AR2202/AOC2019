@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 module Day14
   (totalAmmount',
    day14a,
@@ -62,20 +63,20 @@ reaction2Components = splitEducts . reaction2ProductsEducts
 
 reaction2tuples = subtosub . reaction2Components
 
-splitEduct t= splitOn " " $fst t
+splitEduct = splitOn " " . fst 
 
-splitProduct t= splitOn " " $snd t
+splitProduct = splitOn " " . snd 
 
 makeLabel :: (String,String)->[(Int,Int)]
 makeLabel tuple = [(read.head)(splitEduct tuple), (read.head) (splitProduct tuple)]
 
-makeEduct tuple = head $ tail $ splitEduct tuple
+makeEduct  = head . tail . splitEduct 
 
-makeProduct tuple = head $ tail $ splitProduct tuple
+makeProduct  = head . tail . splitProduct 
 
 makeEdge tuple = (makeLabel tuple, makeProduct tuple, makeEduct tuple)
 
-makeEdges reaction = map makeEdge $ reaction2tuples reaction
+makeEdges  = map makeEdge . reaction2tuples
 
 day14a :: IO ()
 day14a = do

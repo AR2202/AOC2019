@@ -1,6 +1,7 @@
 module Day4
   (day4a,
    day4b,
+   day4ab,
    digs,
    allIncrease,
    hasDouble
@@ -72,3 +73,16 @@ day4b = do
   let possibilities = length codes
   print possibilitiesPart1
   print possibilities
+
+-- some functions testing alternative approach
+
+filterCodesLength :: [[Int]] -> ([Int]->Bool)-> Int
+filterCodesLength numlists f = length $ filter allIncrease $ filter f numlists
+
+day4ab = do
+  let numlists = map digs allNums
+  let possibilitiesPart1 = filterCodesLength numlists hasMultiple
+  let possibilitiesPart2 = filterCodesLength numlists hasDouble
+  print possibilitiesPart1
+  print possibilitiesPart2
+    

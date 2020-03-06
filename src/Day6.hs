@@ -18,6 +18,7 @@ import Data.Graph
 import Data.Maybe
 import Data.List
 
+--Data from the examples provided on the website
 
 (examplegraph, nodefromvertex1,vertexfromkey1) = graphFromEdges [("B",'B',['0']),("G",'G',['B']),("H",'H',['G']),("C",'C',['B']),("D",'D',['C']),("I",'I',['D']),("E",'E',['D']),("F",'F',['E']),("J",'J',['E']),("K",'K',['J']),("L",'L',['K']),("COM",'0',[])]
 
@@ -34,7 +35,7 @@ allConnectedVertices2 graph = sum $map (length.(reachable graph)) $ vertices gra
 
 parseInput (a:c:d:')':b) = (b,b,(pure(a:c:d:[])))
 
-
+--Solution to Part 1
 
 day6a = do
   input6 <-readFile "./input/day6.txt"

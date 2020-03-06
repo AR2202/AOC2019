@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 module Day12
   (allToAllGravity,
    moonlist,
@@ -55,7 +56,7 @@ moonlist' =[moon1',moon2',moon3',moon4']
 
 gravity (Moon pos2 vel2)  (Moon pos1 vel1) = Moon pos1 (Pos (x vel1 + compareOne (x pos1) (x pos2)) (y vel1 + compareOne (y pos1) (y pos2)) (z vel1 + compareOne (z pos1) (z pos2)))
 
-oneToAllGravity moon list = map (gravity moon) list
+oneToAllGravity moon  = map (gravity moon) 
 
 allToAllGravity list = foldl (\acc x -> oneToAllGravity x acc) list list
 
@@ -66,9 +67,9 @@ compareOne int1 int2
 
 velocity (Moon pos vel) = Moon (Pos (x pos + x vel) (y pos + y vel) (z pos + z vel)) vel
 
-allVelocity list = map velocity list
+allVelocity  = map velocity 
 
-step list = allVelocity $ allToAllGravity list
+step  = allVelocity . allToAllGravity 
 
 
 nsteps n list = iterate step list !! n
@@ -79,6 +80,6 @@ potEnergy (Moon pos vel) = abs (x pos) + abs (y pos) + abs (z pos)
 
 totEnergy moon = kinEnergy moon * potEnergy moon
 
-totEnergyAll list = map totEnergy list
+totEnergyAll  = map totEnergy 
 
 sumEnergy  = sum . totEnergyAll

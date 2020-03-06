@@ -26,6 +26,8 @@ dependencies:
 - containers
 - pipes
 - algebraic-graphs
+- mtl
+- comonad
 
 library:
   source-dirs: src

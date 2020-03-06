@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 module Day10
   (pointToPoint,
   Coord(..),
@@ -6,10 +7,6 @@ module Day10
   detectable,
   detectableAll,
   list,
-  a9,
-  a4,
-  a5,
-  a6,
   maxDetectable,
   day10a
   )
