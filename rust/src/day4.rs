@@ -1,8 +1,8 @@
 pub mod day4ab{
 
     pub fn day4a_sol()-> usize{
-        let totalRange : Vec <i32> = (356261..846303).collect();
-        let diglists:Vec<&i32>= totalRange.iter()
+        let total_range : Vec <i32> = (356261..846303).collect();
+        let diglists:Vec<&i32>= total_range.iter()
         .filter(|y|digitized_contains_multiples(**y))
         .filter(|y|digitized_monotonic_increasing(**y))
         .collect();
@@ -15,8 +15,8 @@ pub mod day4ab{
 
     }
     pub fn day4b_sol()-> usize{
-        let totalRange : Vec <i32> = (356261..846303).collect();
-        let diglists:Vec<&i32>= totalRange.iter()
+        let total_range : Vec <i32> = (356261..846303).collect();
+        let diglists:Vec<&i32>= total_range.iter()
         .filter(|y|digitized_contains_doubles(**y))
         .filter(|y|digitized_monotonic_increasing(**y))
         .collect();
@@ -27,6 +27,29 @@ pub mod day4ab{
 
         
 
+    }
+    pub fn day4_sol(f:fn(i32)->bool)-> usize{
+        let total_range : Vec <i32> = (356261..846303).collect();
+        let diglists:Vec<&i32>= total_range.iter()
+        .filter(|y|f(**y))
+        .filter(|y|digitized_monotonic_increasing(**y))
+        .collect();
+        
+       
+        let possibilities=diglists.len();
+        possibilities 
+
+        
+
+    }
+    
+    pub fn fun_test_ptr(value: i32, f: fn(i32) -> i32) -> i32 {
+        println!("{}", f(value));
+        value
+    }
+
+    pub fn times2(value:i32)->i32{
+        value*2
     }
     fn to_digits(num:i32)->Vec<i32> {
         let mut x =num;
@@ -51,7 +74,7 @@ pub mod day4ab{
     fn contains_multiples(slice:Vec<i32>)-> bool {
         (1..slice.len()).any(|i| slice[i..].contains(&slice[i - 1]))
     }
-    fn digitized_contains_multiples(num:i32)-> bool {
+    pub fn digitized_contains_multiples(num:i32)-> bool {
         let slice = to_digits(num);
         contains_multiples(slice)
     }
@@ -69,7 +92,7 @@ pub mod day4ab{
         ||( &slice[1]==&slice[0] && &slice[1]!=&slice[2])
         ||(&slice[slice.len()-1]==&slice[slice.len()-2] && &slice[slice.len()-2]!=&slice[slice.len()-3])
     }
-    fn digitized_contains_doubles(num:i32)-> bool {
+    pub fn digitized_contains_doubles(num:i32)-> bool {
         let slice = to_digits(num);
         contains_doubles(slice)
     }
@@ -162,10 +185,12 @@ mod tests {
         assert_eq!(day4a_sol() , 544);
     
     }
+    
     #[test]
-    fn day4b_sol_test() {
+    fn day4_sol_test() {
         
-        assert_eq!(day4b_sol() , 334);
+        assert_eq!(day4b_sol() , day4_sol(digitized_contains_doubles));
+        assert_eq!(day4a_sol(),day4_sol(digitized_contains_multiples));
     
     }
 }
