@@ -43,14 +43,7 @@ pub mod day4ab{
 
     }
     
-    pub fn fun_test_ptr(value: i32, f: fn(i32) -> i32) -> i32 {
-        println!("{}", f(value));
-        value
-    }
-
-    pub fn times2(value:i32)->i32{
-        value*2
-    }
+    
     fn to_digits(num:i32)->Vec<i32> {
         let mut x =num;
         let mut diglist:Vec<i32> = Vec::new();
