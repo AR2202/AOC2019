@@ -2,11 +2,14 @@
 module Day16(
   solution16a,
   --solution16b,
+  day16a,
+  test16b
             )
   where
 
 import Control.Monad
 import Data.List
+import Data.String.Utils (rstrip)
 
 
 pattern1 :: [Int]
@@ -31,7 +34,7 @@ replicateList :: [Int]->[[Int]]
 replicateList list = replicate (length list) list
 
 stepFFT :: [Int] -> [Int]
-stepFFT list = map (flip mod 10 . abs . sum) $ multiplyWithPatterns $ replicateList list
+stepFFT  = map (flip mod 10 . abs . sum) . multiplyWithPatterns . replicateList 
 
 
 first7 :: String -> Int
@@ -45,5 +48,13 @@ stringToDigits = map read . toListOfStrings
 
 solution16a input = take 8 $ iterate stepFFT (stringToDigits input)!!100
 
---to much memory pressure, don't run this
+--too much memory pressure, don't run this
 solution16b input = take 8 $ drop (first7  input) $ iterate stepFFT (join (replicate 10000 (stringToDigits input))) !!100
+solution16b_ input = take 8 $ drop (first7  input) $ iterate stepFFT (join (replicate 100
+                                                                            (stringToDigits input))) !!100
+
+test16b = print $solution16b_ "03036732577212944063491565474664"
+day16a :: IO()
+day16a = do
+  input16 <- readFile "../input/day16.txt"
+  putStrLn $ concat $ map show $ solution16a $ rstrip input16
