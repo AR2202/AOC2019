@@ -9,3 +9,8 @@ edition = "2018"
 [dependencies]
 libmath = "0.2.1"
 array_tool="1.0.3"
+ndarray="0.13.0"
+nalgebra="0.21.0"
+nalgebra-glm = "0.3"
+itertools="0.9.0"
+num="0.1.28"
