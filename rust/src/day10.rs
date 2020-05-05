@@ -17,7 +17,7 @@ pub mod day10a{
     use num::integer::div_floor;
     use array_tool::vec::Uniq;
     
-    pub fn day10a_sol(){
+    pub fn day10a_b_sol(){
         
         let filename = "../input/day10.txt";
         let contents = fs::read_to_string(filename);
@@ -44,8 +44,11 @@ pub mod day10a{
             
         
         }
-        let sol10=max_detectable(vector);
-        println!("sol10 {}",sol10);
+        let vectorcopy=vector.clone();
+        let sol10a=max_detectable(vector);
+        let sol10b=find_asteroid200(vectorcopy);
+        println!("sol10a {}",sol10a);
+        println!("sol10b {}",sol10b);
        
     }
     pub fn example1()->(){
@@ -60,7 +63,6 @@ pub mod day10a{
         let a9=vec2(3,4);
         let a10=vec2(4,4);
         let asteroidlist = vec![a1,a2,a3,a4,a5,a6,a7,a8,a9,a10];
-        
         
         let maxl1=max_detectable(asteroidlist);
         println!("length alldiffer {}",maxl1);
@@ -84,8 +86,71 @@ pub mod day10a{
             Some(i)=>*i,
             None=>0,
         };
+        
         return maxl
     }
+    fn find_asteroid200(asteroidlist:Vec<TVec2<i32>>)->i32{
+        let alldiffer:Vec<Vec<TVec2<i32>>>=
+        asteroidlist
+        .iter()
+        .map(|a|difference_to_all(a,&asteroidlist))
+        .map(|list|list.unique())
+        .collect();
+        let len_alldiffer:Vec<usize>=
+        alldiffer
+        .iter()
+        .map(|list|list.len())
+        .collect();
+        let maxlen=len_alldiffer.iter().max();
+        let maxl=match maxlen{
+            Some(i)=>*i,
+            None=>0,
+        };
+        let maxpos= len_alldiffer.iter().position(|&x| x == maxl);
+        let maxp=match maxpos{
+            Some(i)=>i,
+            None=>0,
+        };
+        let vectors= &alldiffer[maxp];
+        let asteroidcoord=&asteroidlist[maxp];
+        println!("Asteroid with detecting station: {}",asteroidcoord);
+        let mut positives:Vec<&TVec2<i32>>=
+        vectors
+        .iter()
+        .filter(|a|a[0]>=0)
+        .collect();
+        let mut negatives:Vec<&TVec2<i32>>=
+        vectors
+        .iter()
+        .filter(|a|a[0]<0)
+        .collect();
+        
+        let length=vectors.len();
+        let lenpos=positives.len();
+        let lenneg=negatives.len();
+        let mut coord200 = *positives[0];  
+        if lenpos<200{
+            negatives
+            .sort_by(|a, b| (a[1]*b[0])
+            .partial_cmp(&(b[1]*a[0]))
+            .unwrap());
+            let index = 200-1-lenpos;
+            coord200=negatives[index]+asteroidcoord;
+            
+            println!("coordinate of asteroid 200: {}",coord200)
+        }
+        else {
+            positives
+            .sort_by(|a,b| a[1]
+            .partial_cmp(&b[1])
+            .unwrap());
+            coord200 = *positives[199];
+        }
+            let resultcode = 100*coord200[0]+coord200[1];
+        
+        return resultcode
+    }
+    
     fn difference_to_all(vect:&TVec2<i32>,pointlist: &Vec<TVec2<i32>>)->Vec<TVec2<i32>>{
         let mut pointlistclone=pointlist.clone();
         pointlistclone.retain(|&v| v != *vect);
@@ -109,4 +174,16 @@ pub mod day10a{
         return newvec
         
     }
+    #[cfg(test)]
+mod tests {
+    use super::*;
+    
+    
+    #[test]
+    fn day10a_sol_test() {
+        
+       // assert_eq!(day10a_sol() , vec![1,0]);
+       
+    }
+}
 }

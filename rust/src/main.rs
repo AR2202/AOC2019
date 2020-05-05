@@ -16,7 +16,8 @@ fn main (){
     println!("Solution to day4 part 1: {}",day4a);
     println!("Solution to day4 part 2: {}",day4b);
     day10a::example1();
-    day10a::day10a_sol();
+    day10a::day10a_b_sol();
+    
 
 
 }
