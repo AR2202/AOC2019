@@ -1,18 +1,13 @@
 pub mod day10a{
     extern crate ndarray;
-    use ndarray::arr1;
     extern crate nalgebra as na;
     extern crate nalgebra_glm as glm;
     extern crate itertools;
     extern crate num;
     extern crate array_tool;
     use std::fs;
-    use std::str::FromStr;
-    use nalgebra_glm::are_collinear2d;
     use nalgebra_glm::vec2;
     use nalgebra_glm::TVec2;
-    use nalgebra_glm::normalize;
-    use itertools::Itertools;
     use num::integer::gcd;
     use num::integer::div_floor;
     use array_tool::vec::Uniq;
@@ -24,20 +19,20 @@ pub mod day10a{
     
     
     
-        let contents2= contents.unwrap();
+        let contents2 = contents.unwrap();
         let thelines = contents2.lines();
         
         let mut vector :Vec<TVec2<i32>>= Vec::new();
         let mut yval=0;
 
         for l in thelines {
-            let mut xval=0;
+            let mut xval = 0;
             for c in l.chars(){
                 let coord = vec2(xval,yval);
-                if c =='#'{
+                if c == '#'{
                     vector.push(coord);
                 }
-                xval=xval+1;
+                xval = xval+1;
 
             }
             yval=yval+1;
@@ -45,28 +40,28 @@ pub mod day10a{
         
         }
         let vectorcopy=vector.clone();
-        let sol10a=max_detectable(vector);
-        let sol10b=find_asteroid200(vectorcopy);
+        let sol10a = max_detectable(vector);
+        let sol10b = find_asteroid200(vectorcopy);
         println!("sol10a {}",sol10a);
         println!("sol10b {}",sol10b);
        
     }
-    pub fn example1()->(){
+    pub fn example1()->usize{
         let a1 = vec2(1,0);
-        let a2=vec2(4,0);
-        let a3=vec2(0,2);
-        let a4=vec2(1,2);
-        let a5=vec2(2,2);
-        let a6=vec2(3,2);
-        let a7=vec2(4,2);
-        let a8=vec2(4,3);
+        let a2 = vec2(4,0);
+        let a3 = vec2(0,2);
+        let a4 = vec2(1,2);
+        let a5 = vec2(2,2);
+        let a6 = vec2(3,2);
+        let a7 = vec2(4,2);
+        let a8 = vec2(4,3);
         let a9=vec2(3,4);
         let a10=vec2(4,4);
         let asteroidlist = vec![a1,a2,a3,a4,a5,a6,a7,a8,a9,a10];
         
         let maxl1=max_detectable(asteroidlist);
         println!("length alldiffer {}",maxl1);
-       
+        return maxl1
 
     }
     fn max_detectable(asteroidlist:Vec<TVec2<i32>>)->usize{
@@ -125,17 +120,15 @@ pub mod day10a{
         .filter(|a|a[0]<0)
         .collect();
         
-        let length=vectors.len();
         let lenpos=positives.len();
-        let lenneg=negatives.len();
-        let mut coord200 = *positives[0];  
-        if lenpos<200{
+        let mut coord200 = TVec2::new(0,0);  
+        if lenpos < 200{
             negatives
             .sort_by(|a, b| (a[1]*b[0])
             .partial_cmp(&(b[1]*a[0]))
             .unwrap());
             let index = 200-1-lenpos;
-            coord200=negatives[index]+asteroidcoord;
+            coord200 = negatives[index]+asteroidcoord;
             
             println!("coordinate of asteroid 200: {}",coord200)
         }
@@ -169,7 +162,7 @@ pub mod day10a{
         let gcdiv=gcd(vect[0],vect[1]);
         let newvec=match gcdiv {
             0 => *vect,
-            _=> vec2(div_floor(vect[0],gcdiv),div_floor(vect[1],(gcdiv))),
+            _=> vec2(div_floor(vect[0], gcdiv),div_floor(vect[1], gcdiv)),
         };
         return newvec
         
@@ -180,9 +173,20 @@ mod tests {
     
     
     #[test]
-    fn day10a_sol_test() {
-        
-       // assert_eq!(day10a_sol() , vec![1,0]);
+
+    fn reduced_vec_test() {
+        let vec1 = TVec2::new(2,4);
+        let vec2 = TVec2::new(3,6);
+        let vec3 = TVec2::new(3,-6);
+        let vec_red = TVec2::new(1,2);
+        assert_eq!(reduced_vec(&vec1), *&vec_red);
+        assert_eq!(reduced_vec(&vec2), *&vec_red);
+        assert!(&vec3 != &vec_red);
+       
+    }
+    #[test]
+    fn example1_test() {
+       assert_eq!(example1(), 8);
        
     }
 }
