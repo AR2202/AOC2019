@@ -60,7 +60,7 @@ pub mod day10a{
         let asteroidlist = vec![a1,a2,a3,a4,a5,a6,a7,a8,a9,a10];
         
         let maxl1=max_detectable(asteroidlist);
-        println!("length alldiffer {}",maxl1);
+        println!("example1 max detectable{}",maxl1);
         return maxl1
 
     }
@@ -84,6 +84,8 @@ pub mod day10a{
         
         return maxl
     }
+    //This function only works because I already know from part 1 that 
+    //more than 200 asteroids are detectable
     fn find_asteroid200(asteroidlist:Vec<TVec2<i32>>)->i32{
         let alldiffer:Vec<Vec<TVec2<i32>>>=
         asteroidlist
@@ -121,25 +123,25 @@ pub mod day10a{
         .collect();
         
         let lenpos=positives.len();
-        let mut coord200 = TVec2::new(0,0);  
-        if lenpos < 200{
-            negatives
+
+        negatives
             .sort_by(|a, b| (a[1]*b[0])
             .partial_cmp(&(b[1]*a[0]))
             .unwrap());
-            let index = 200-1-lenpos;
-            coord200 = negatives[index]+asteroidcoord;
-            
-            println!("coordinate of asteroid 200: {}",coord200)
-        }
-        else {
-            positives
+        positives
             .sort_by(|a,b| a[1]
             .partial_cmp(&b[1])
             .unwrap());
-            coord200 = *positives[199];
+        let index = 200-1-lenpos;
+        let coord200 = if lenpos < 200{
+            negatives[index]+asteroidcoord
+         
         }
-            let resultcode = 100*coord200[0]+coord200[1];
+        else {
+            *positives[199]
+        };
+        println!("coordinate of asteroid 200: {}",coord200);
+        let resultcode = 100*coord200[0]+coord200[1];
         
         return resultcode
     }
