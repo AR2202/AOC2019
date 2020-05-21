@@ -42,8 +42,8 @@ pub mod day10a{
         let vectorcopy=vector.clone();
         let sol10a = max_detectable(vector);
         let sol10b = find_asteroid200(vectorcopy);
-        println!("sol10a {}",sol10a);
-        println!("sol10b {}",sol10b);
+        println!("solution to day 10a {}",sol10a);
+        println!("solution to day 10b {}",sol10b);
        
     }
     pub fn example1()->usize{
@@ -60,7 +60,7 @@ pub mod day10a{
         let asteroidlist = vec![a1,a2,a3,a4,a5,a6,a7,a8,a9,a10];
         
         let maxl1=max_detectable(asteroidlist);
-        println!("example1 max detectable{}",maxl1);
+        println!("example1 max detectable: {}",maxl1);
         return maxl1
 
     }
@@ -140,7 +140,7 @@ pub mod day10a{
         else {
             *positives[199]
         };
-        println!("coordinate of asteroid 200: {}",coord200);
+        println!("Coordinate of asteroid 200: {}",coord200);
         let resultcode = 100*coord200[0]+coord200[1];
         
         return resultcode
