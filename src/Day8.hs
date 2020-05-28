@@ -45,10 +45,10 @@ transpose = getZipList . traverse ZipList
 
 transposedImg = transpose . layers
 
--- Just a function for converting all the 1s to @ and all the 0s to _ to make the image visible
+-- Just a function for converting all the 1s to @ and all the 0s to . to make the image visible
 maybePixelToDisp (Just 1) = '@'
-maybePixelToDisp (Just 0) = '_'
-maybePixelToDisp _        = '.' --This should not happen, but just in case
+maybePixelToDisp (Just 0) = '.'
+maybePixelToDisp _        = '_' --This should not happen, but just in case
 
 day8b = do
   input <-readFile "./input/day8.txt"
