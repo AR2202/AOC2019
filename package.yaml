@@ -28,6 +28,9 @@ dependencies:
 - algebraic-graphs
 - mtl
 - comonad
+- ListZipper
+- vector
+
 
 library:
   source-dirs: src
